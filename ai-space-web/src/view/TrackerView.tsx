@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import ReactDOM from "react-dom";
 
 
 function TrackerView() {
@@ -30,7 +29,7 @@ function TrackerView() {
         checked.includes(item) ? "checked-item" : "not-checked-item";
 
     return (
-        <div >
+        <div className={"card"} >
             <h2>Remaining Tasks</h2>
             <br/>
                 <div className="list-container">
@@ -43,7 +42,7 @@ function TrackerView() {
                                 <input value={item} type="checkbox" onChange={handleCheck} />
                             </div>
                             <div className={"col-sm-6"} style={{display:"flex"}} >
-                                <span className={isChecked(item)} style={{color:"Wheat"}}>{item}</span>
+                                <span className={isChecked(item)} style={{color:"#242424"}}>{item}</span>
                             </div>
                         </div>
                     ))}

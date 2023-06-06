@@ -1,6 +1,6 @@
-import React, {ChangeEvent, useState} from "react";
+// import React, {ChangeEvent, useState} from "react";
 import "./App.css";
-import Main from "./view/Main";
+import Main from "./view/Main.tsx";
 
 export type ChatMessage = {
     role: string;
@@ -14,5 +14,4 @@ function App(): JSX.Element {
         <Main/>
     )
 }
-
 export default App;

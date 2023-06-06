@@ -1,8 +1,7 @@
-import React from "react"
 import ChatView from "./ChatView";
 import TrackerView from "./TrackerView";
 
-function Main() {
+function Main():JSX.Element {
     return (
         <>
             <div className={"row"}>
@@ -10,11 +9,14 @@ function Main() {
                     <h1>OnBoarding AI Space</h1>
                     <br/>
                 </div>
+                <div className={"col-sm-3"}>
+                    <TrackerView/>
+                </div>
                 <div className={"col-sm-6"}>
                     <ChatView/>
                 </div>
 
-                <div className={"col-sm-6"}>
+                <div className={"col-sm-3"}>
                     <TrackerView/>
                 </div>
             </div>

@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import {FormEvent} from "react/ts5.0";
 import {ChatMessage} from "../App";
 
-function ChatView() {
+function ChatView():JSX.Element {
 
     const [message, setMessage] = useState<string>("");
     const [chats, setChats] = useState<ChatMessage[]>([]);
@@ -17,10 +17,10 @@ function ChatView() {
         setIsTyping(true);
         window.scrollTo(0, 1e10);
 
-        let msgs: ChatMessage[] = [...chats];
+        const msgs: ChatMessage[] = [...chats];
         msgs.push({role: "user", content: message});
         setChats(msgs);
-        let request: ChatMessage = {role: "user", content: message}
+        const request: ChatMessage = {role: "user", content: message}
         console.log("MSG_LIst", msgs)
         console.log("Message", message)
 
@@ -49,7 +49,7 @@ function ChatView() {
     };
 
     return (
-        <div>
+        <div className={"card"}>
             <h2>AI Assistant</h2>
             <br/>
             <div>
