@@ -62,6 +62,24 @@ p span:first-child{
   flex-direction: row-reverse;
 }
 
+.ai_msg{
+  text-align: left;
+  margin-right: 30%;
+  display: flex;
+  background-color: #2f4f4f;
+  flex-direction: row;
+}
+
+.user_msg_div{
+  justify-content: flex-end;
+  padding-right: 15px;
+}
+
+.ai_msg_div{
+  justify-content: flex-start;
+  padding-left: 15px;
+}
+
 .hide {
   visibility: hidden;
   display: none;
@@ -75,15 +93,38 @@ form{
 
 input{
   width: 100%;
-  height: 60px;
+  height: 40px;
   border: none;
   border-radius: 30px;
   padding: 10px;
-  font-size: 1.2rem;
+  font-size: 1rem;
   background-color: rgb(28, 23, 23);
   color: wheat;
 }
 
 input:focus{
   outline: none;
+}
+
+.chat-container {
+  max-height: 100%; /* Adjust the height as needed */
+  /*overflow-y: scroll;*/
+}
+
+pre{
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  padding: 0.25rem;
+  margin-bottom: 0 !important;
+}
+
+.card{
+  padding: 1rem !important;
+}
+
+
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+  color: whitesmoke;
+  font-size: 10px;
+  opacity: 0.75; /* Firefox */
 }
