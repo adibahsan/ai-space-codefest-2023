@@ -1,6 +1,7 @@
 // import React, {ChangeEvent, useState} from "react";
 import "./App.css";
 import Main from "./view/Main.tsx";
+import Header from "./view/Navbar/Header.tsx";
 
 export type ChatMessage = {
     role: string;
@@ -11,7 +12,11 @@ export type ChatMessage = {
 
 function App(): JSX.Element {
     return (
-        <Main/>
+        <>
+            <Header />
+            <Main/>
+        </>
+
     )
 }
 export default App;

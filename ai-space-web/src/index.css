@@ -128,3 +128,15 @@ pre{
   font-size: 10px;
   opacity: 0.75; /* Firefox */
 }
+
+header h2 {
+  font-weight: 600;
+  background-image: linear-gradient(to left, #553c9a, #b393d3);
+  color: transparent;
+  background-clip: text;
+  -webkit-background-clip: text;
+}
+header{
+  background-color: white;
+  margin-bottom: 15px;
+}
