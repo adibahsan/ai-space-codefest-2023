@@ -149,14 +149,21 @@ header{
   width: 18vw;
   transition: left 0.3s ease-in-out;
   background-color: lightgray;
+  border-radius: 30px;
 }
 .sidebar-toggle {
   position: absolute;
-  top: 20%;
-  right: -60px;
+  top: 40%;
+  right: -70px;
   height: 60px;
-  width: 60px;
+  width: 100px;
   z-index: 1;
+  font-size: 10px;
+  border-radius: 30px;
+  border : 0;
+  background-color: white;
+
+
 }
 
 
@@ -168,15 +175,21 @@ header{
   width: 18vw;
   transition: right 0.3s ease-in-out;
   background-color: lightgray;
+  border-radius: 30px;
+
 }
 
 .sidebar-toggle-right {
   position: absolute;
-  top: 20%;
-  left: -60px;
+  top: 40%;
+  left: -70px;
   height: 60px;
-  width: 60px;
+  width: 100px;
   z-index: 1;
+  font-size: 10px;
+  border-radius: 30px;
+  border : 0;
+  background-color: white;
 }
 
 .content {

@@ -7,7 +7,7 @@ const RightSideBar = props => {
         <div className={sidebarClass}>
             <TrackerView/>
             <button onClick={props.toggleSidebar} className="sidebar-toggle-right">
-                Remain
+                Tasks
             </button>
         </div>
     );
