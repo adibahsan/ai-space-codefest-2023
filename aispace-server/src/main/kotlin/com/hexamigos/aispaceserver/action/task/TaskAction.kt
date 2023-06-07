@@ -34,7 +34,7 @@ class TaskAction(val resourceCenter: ResourceCenter,
             `OPERATION_TYPE` can be CREATE, UPDATE, DELETE
             `STATUS_TYPE` can be COMPLETED, PENDING, ONGOING
             @id, @title, @description, @assigned are placeholder that needs to be replaced with the proper value from @task. If the there's no value in placeholder then keep empty types.
-            When replaying for query on tasks you will respond in the table format in markdown with header No, Title, State, AssignedTo
+            When replaying for query on tasks you will respond in the table format in markdown with header No, Title, Description, State, Assigned To
             
             ---
             output: 
