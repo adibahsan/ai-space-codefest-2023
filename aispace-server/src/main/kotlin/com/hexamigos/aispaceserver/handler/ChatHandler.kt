@@ -1,6 +1,8 @@
 package com.hexamigos.aispaceserver.handler
 
-import com.hexamigos.aispaceserver.domain.*
+import com.hexamigos.aispaceserver.domain.ChatData
+import com.hexamigos.aispaceserver.domain.ChatRequest
+import com.hexamigos.aispaceserver.domain.Message
 import com.hexamigos.aispaceserver.service.ChatService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Component
@@ -16,25 +18,11 @@ class ChatHandler(private val chatService: ChatService) {
 
         val chatCompletion = chatService.getChatCompletion(chatRequest.content)
 
-        println("Chat Completion $chatCompletion")
-
-        val taskList = listOf<Tasks>(Tasks("1",true, "Get HRM Access"), Tasks("2",true, "Introduction with Supervisor"), Tasks("3",false, "QA Introduction"))
-        val actionList =
-            listOf<Actions>(Actions("1",true, "Send Daily Update"), Actions("2",true, "Ask For Supervisor's help"), Actions("4",false, "Call 911"))
-
         return ServerResponse.ok().bodyValueAndAwait(
-            ChatResp(
-                message = Message(
-                    role = "Assistant",
-                    content = chatCompletion.content
-                ),
-                payLoad = PayLoad(
-                    tasks = taskList,
-                    actions = actionList
-                )
-
+            Message(
+                role = "Assistant",
+                content = chatCompletion.content
             )
-
         )
     }
 }
