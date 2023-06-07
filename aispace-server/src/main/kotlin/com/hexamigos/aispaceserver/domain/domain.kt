@@ -6,6 +6,28 @@ data class ChatRequest(
     val temperature: Double = 0.1
 )
 
+
+data class Tasks(
+    val status: Boolean,
+    val taskName: String?
+)
+
+data class Actions(
+    val status: Boolean,
+    val actionName: String?
+)
+
+data class ChatResp(
+    val message: Message,
+    val payLoad: PayLoad?
+)
+
+data class PayLoad(
+    val tasks: List<Tasks>?,
+    val actions: List<Actions>?
+
+)
+
 data class Message(
     val role: String,
     val content: String

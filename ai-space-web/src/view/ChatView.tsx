@@ -1,12 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {FormEvent} from "react/ts5.0";
 import {ChatMessage} from "../App";
-import {scrollToId} from "../util/util.ts";
+import {ChatResp, Message} from "../api";
 
 function ChatView():JSX.Element {
 
     const [message, setMessage] = useState<string>("");
-    const [chats, setChats] = useState<ChatMessage[]>([]);
+    const [chats, setChats] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const chatContainerRef = useRef(null);
@@ -44,8 +44,8 @@ function ChatView():JSX.Element {
         msgs.push({ role: "user", content: message });
         setChats(msgs);
         const request: ChatMessage = { role: "user", content: message };
-        console.log("MSG_LIst", msgs);
-        console.log("Message", message);
+        // console.log("MSG_LIst", msgs);
+        // console.log("Message", message);
 
         setMessage("");
 
@@ -67,8 +67,9 @@ function ChatView():JSX.Element {
                 }
                 return response.json();
             })
-            .then((data: ChatMessage) => {
-                msgs.push(data);
+            .then((data: ChatResp) => {
+                console.log("ChatResp", data)
+                msgs.push(data.message);
                 setChats(msgs);
                 setIsTyping(false);
                 window.scrollTo(0, 1e10);
