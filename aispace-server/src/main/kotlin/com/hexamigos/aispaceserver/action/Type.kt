@@ -1,7 +1,7 @@
 package com.hexamigos.aispaceserver.action
 
 enum class ActionType {
-    SEND_EMAIL, NOT_DETECTED, NO_ACTION, TASK
+    SEND_EMAIL, NOT_DETECTED, NO_ACTION, TASK, MEETING
 }
 
 enum class OperationType {

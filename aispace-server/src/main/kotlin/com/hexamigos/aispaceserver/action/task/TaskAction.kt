@@ -116,5 +116,7 @@ class TaskAction(val resourceCenter: ResourceCenter,
         }
 
     }
+    override fun toString() = "TaskAction"
+
 
 }
