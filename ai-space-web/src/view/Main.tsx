@@ -1,22 +1,21 @@
-import React from "react"
 import ChatView from "./ChatView";
 import TrackerView from "./TrackerView";
 
-function Main() {
+function Main():JSX.Element {
     return (
         <>
+            {/*<NavbarComponent/>*/}
             <div className={"row"}>
-                <div className={"col-sm-12"}>
-                    <h1>OnBoarding AI Space</h1>
-                    <br/>
-                </div>
-                <div className={"col-sm-6"}>
+                <div className={"col-sm-2"}/>
+                {/*    /!*<TrackerView/>*!/*/}
+                {/*</div>*/}
+                <div className={"col-sm-8"}>
                     <ChatView/>
                 </div>
 
-                <div className={"col-sm-6"}>
-                    <TrackerView/>
-                </div>
+                {/*<div className={"col-sm-3"}>*/}
+                {/*    <TrackerView/>*/}
+                {/*</div>*/}
             </div>
         </>
     )

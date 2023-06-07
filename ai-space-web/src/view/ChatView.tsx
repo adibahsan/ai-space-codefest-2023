@@ -1,28 +1,59 @@
-import React, {useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {FormEvent} from "react/ts5.0";
 import {ChatMessage} from "../App";
+import {ChatResp, Message} from "../api/api";
+import useTasks from "../reducer/hooks/useTasks.ts";
+import useActions from "../reducer/hooks/useActions.ts";
 
-function ChatView() {
+function ChatView():JSX.Element {
 
     const [message, setMessage] = useState<string>("");
-    const [chats, setChats] = useState<ChatMessage[]>([]);
+    const [chats, setChats] = useState<Message[]>([]);
     const [isTyping, setIsTyping] = useState<boolean>(false);
+    const [isError, setIsError] = useState<boolean>(false);
+    const chatContainerRef = useRef(null);
+    const [task,setTasks] = useTasks()
+    const [actions,setActions] = useActions()
+
+    console.log("TASKS", task, "===> Actions",actions)
+
+    useEffect(()=>{
+        console.log("New Chat")
+        scrollChatToBottom()
+        // bottomRef.current?.scrollIntoView({behavior: 'smooth'});
+    },[chats])
+
+
+    const scrollChatToBottom = () => {
+        if (chatContainerRef.current) {
+            console.log("Scrolling")
+            chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+        }
+    };
+
 
     console.log("Chats", chats)
 
-    const chatUpdater = async (e: FormEvent<HTMLFormElement>, message: string): Promise<void> => {
+    const chatUpdater = async (
+        e: FormEvent<HTMLFormElement>,
+        message: string
+    ): Promise<void> => {
         e.preventDefault();
-        console.log("E Value", e.target)
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setTasks([])
+        console.log("E Value", e.target);
+        scrollChatToBottom()
         if (!message) return;
         setIsTyping(true);
         window.scrollTo(0, 1e10);
 
-        let msgs: ChatMessage[] = [...chats];
-        msgs.push({role: "user", content: message});
+        const msgs: ChatMessage[] = [...chats];
+        msgs.push({ role: "user", content: message });
         setChats(msgs);
-        let request: ChatMessage = {role: "user", content: message}
-        console.log("MSG_LIst", msgs)
-        console.log("Message", message)
+        const request: ChatMessage = { role: "user", content: message };
+        // console.log("MSG_LIst", msgs);
+        // console.log("Message", message);
 
         setMessage("");
 
@@ -32,45 +63,67 @@ function ChatView() {
                 "Content-Type": "application/json",
             },
             body: JSON.stringify({
-                role: request.role, content: request.content
-
+                role: request.role,
+                content: request.content,
             }),
         })
-            .then((response) => response.json())
-            .then((data: ChatMessage) => {
-                msgs.push(data);
+            .then((response) => {
+                setIsError(!response.ok)
+                if (!response.ok) {
+                    setIsTyping(false)
+                    throw new Error("Error: " + response.status);
+                }
+                return response.json();
+            })
+            .then((data: ChatResp) => {
+                console.log("ChatResp", data)
+                msgs.push(data.message);
                 setChats(msgs);
+                // @ts-ignore
+                setTasks(data.payLoad?.tasks)
+                setActions(data.payLoad?.actions)
                 setIsTyping(false);
                 window.scrollTo(0, 1e10);
             })
             .catch((error) => {
-                console.log(error);
+                console.log("Fetch error:", error);
+                // Handle the error here, e.g., show an error message to the user
             });
     };
 
     return (
-        <div>
-            <h2>AI Assistant</h2>
-            <br/>
-            <div>
+        <div className={"card"}>
+            <h5 style={{backgroundColor:"black", color:"white", borderRadius:"20px", position:"sticky"}}>AI Assistant</h5>
+            <div className={"chat-container"}  >
                 {chats && chats.length
                     ? chats.map((chat: ChatMessage, index: number) => (
-                        <p key={index} className={chat.role === "user" ? "user_msg" : ""}>
-                <span>
-                  <b>{chat.role.toUpperCase()}</b>
-                </span>
-                            <span>:</span>
-                            <span>{chat.content}</span>
-                        </p>
+                        <div key={index}>
+                            <div className={`${chat.role === "user" ? "user_msg_div": "ai_msg_div"} d-flex`}>
+                            <small style={{fontWeight:"bold"}} >{chat.role ==="user" ? "User" : "Assistant"}</small>
+                            </div>
+                            <p key={index} className={chat.role === "user" ? "user_msg" : "ai_msg"}>
+                                <pre>{chat.content}</pre>
+                            </p>
+                        </div>
                     ))
                     : ""}
+
+                <div id={"NullDiv"} ref={chatContainerRef} />
             </div>
 
             <div className={isTyping ? "" : "hide"}>
-                <p>
-                    <i>{isTyping ? "Typing" : ""}</i>
-                </p>
+                <pre>
+                    <i>{isTyping ? "Assistant is Typing" : ""}</i>
+                </pre>
             </div>
+
+            <div className={isError ? "" : "hide"}>
+                <pre style={{color:"red"}}>
+                    <i>{isError ? "Error Occurred, Please try again" : ""}</i>
+                </pre>
+            </div>
+
+
 
             <form action="" onSubmit={(e) => chatUpdater(e, message)}>
                 <input
