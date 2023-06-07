@@ -18,9 +18,9 @@ class ChatHandler(private val chatService: ChatService) {
 
         println("Chat Completion $chatCompletion")
 
-        val taskList = listOf<Tasks>(Tasks(true, "task 1"), Tasks(true, "task 2"), Tasks(false, "task 3"))
+        val taskList = listOf<Tasks>(Tasks("1",true, "task 1"), Tasks("2",true, "task 2"), Tasks("3",false, "task 3"))
         val actionList =
-            listOf<Actions>(Actions(true, "action 1"), Actions(true, "action 2"), Actions(false, "action 3"))
+            listOf<Actions>(Actions("1",true, "action 1"), Actions("2",true, "action 2"), Actions("4",false, "action 3"))
 
         return ServerResponse.ok().bodyValueAndAwait(
             ChatResp(

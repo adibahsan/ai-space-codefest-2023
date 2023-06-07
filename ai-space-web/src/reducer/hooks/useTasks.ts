@@ -13,7 +13,21 @@ const useTasks = () => {
         dispatch(setTasks(newTasks));
     }, [dispatch]);
 
-    return [ tasks, updateTasks ];
+    const handleTaskToggle = (taskId: string) => {
+        const updatedTasks = tasks.tasks.map((task) => {
+            if (task.id === taskId) {
+                return {
+                    ...task,
+                    status: !task.status,
+                };
+            }
+            return task;
+        });
+
+        dispatch(setTasks(updatedTasks));
+    }
+
+    return [ tasks, updateTasks, handleTaskToggle ];
 };
 
 export default useTasks;

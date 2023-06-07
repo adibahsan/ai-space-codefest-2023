@@ -8,11 +8,13 @@ data class ChatRequest(
 
 
 data class Tasks(
+    val id: String?,
     val status: Boolean,
     val taskName: String?
 )
 
 data class Actions(
+    val id: String?,
     val status: Boolean,
     val actionName: String?
 )

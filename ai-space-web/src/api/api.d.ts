@@ -1,9 +1,11 @@
 export interface Tasks {
+    id:string;
     status: boolean;
     taskName: string | null;
 }
 
 export interface Actions {
+    id:string;
     status: boolean;
     actionName: string | null;
 }

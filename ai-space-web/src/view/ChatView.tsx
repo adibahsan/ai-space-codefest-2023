@@ -119,7 +119,7 @@ function ChatView():JSX.Element {
 
             <div className={isError ? "" : "hide"}>
                 <pre style={{color:"red"}}>
-                    <i>{isError ? "Error Occured, Please try again" : ""}</i>
+                    <i>{isError ? "Error Occurred, Please try again" : ""}</i>
                 </pre>
             </div>
 
