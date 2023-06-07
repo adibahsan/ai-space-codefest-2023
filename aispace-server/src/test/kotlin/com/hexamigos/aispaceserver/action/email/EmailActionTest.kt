@@ -48,7 +48,7 @@ class EmailActionTest {
             ---
             user_input: @send it to sampath@gmail.com, thilina@gmail.com. @cc adib@gmail.com. @sub "Apply leave on 5th May"
         """.trimIndent().trim()
-        val process = emailAction.process(input)
+        val process = emailAction.process(input, false)
         println(process)
     }
 

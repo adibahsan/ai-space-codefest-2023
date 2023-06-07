@@ -30,15 +30,16 @@ class EmailAction(llmClient: LLMClient,
         body: <email_body>
         }
         ```
+        ---
         output: 
-        ```{email_json}```
+        ```{response_json}```
     """.trimIndent().trim()
     }
 
     override fun getActionType() = ActionType.SEND_EMAIL
 
-    override fun process(input: String): ActionChain<Processed<String, String>> {
-        val chain = super.process(input)
+    override fun process(input: String, maintainHistory: Boolean): ActionChain<Processed<String, String>> {
+        val chain = super.process(input, false)
         if (chain.hasNext()) {
             val response = chain.content
             if (response.processed.isEmpty()) {
@@ -56,9 +57,9 @@ class EmailAction(llmClient: LLMClient,
         return ActionChain(ChainState.NEXT, transformed)
     }
 
-    override fun execute(chain: ActionChain<Transformed<Any, Email>>): ActionChain<ActionStatus> {
+    override fun execute(chain: ActionChain<Transformed<Any, Email>>): ActionChain<Executed<Any, Any>> {
         emailService.send(chain.content.processed)
-        return ActionChain(ChainState.FINISHED, ActionStatus.APPROVAL_NEEDED)
+        return ActionChain(ChainState.FINISHED, Executed(chain.content.processed, ActionStatus.APPROVAL_NEEDED))
     }
 
     override fun toString(): String {

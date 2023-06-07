@@ -1,7 +1,6 @@
 package com.hexamigos.aispaceserver.action
 
 import com.aallam.openai.api.BetaOpenAI
-import com.hexamigos.aispaceserver.action.email.Email
 import com.hexamigos.aispaceserver.integration.ai.llm.LLMClient
 import com.hexamigos.aispaceserver.integration.ai.llm.OpenAIChatResponse
 import com.hexamigos.aispaceserver.integration.ai.llm.OpenAIRequest
@@ -20,7 +19,7 @@ abstract class Action<T>(var prompt: String = "",
     abstract fun getActionType(): ActionType
 
     @OptIn(BetaOpenAI::class)
-    fun process(input: String): ActionChain<Processed<String, String>> {
+    fun process(input: String, maintainHistory: Boolean): ActionChain<Processed<String, String>> {
         val processedInput = input.trim().replace("\n", " ")
         val chatHistory = llmClient.getChatHistory()
         var chain: ActionChain<Processed<String, String>>
@@ -32,7 +31,7 @@ abstract class Action<T>(var prompt: String = "",
                                 prompts = prompt
                         ),
                         chatHistory,
-                        false
+                        maintainHistory
                 ) as OpenAIChatResponse
 
                 val content = chatCompletion.responseMessage.first().message?.content ?: "No Content"
@@ -52,11 +51,11 @@ abstract class Action<T>(var prompt: String = "",
         content.substringAfter("```").substringBefore("```") else ""
 
 
-    abstract fun transform(chain: ActionChain<Processed<String, String>>): ActionChain<Transformed<Any, Email>>
-    abstract fun execute(chain: ActionChain<Transformed<Any, Email>>): ActionChain<ActionStatus>
+    abstract fun transform(chain: ActionChain<Processed<String, String>>): ActionChain<Transformed<Any, T>>
+    abstract fun execute(chain: ActionChain<Transformed<Any, T>>): ActionChain<Executed<Any, Any>>
     fun executeChainAction(input: String): ActionChain<Any> {
         logger.info("Executing email sending action chain")
-        val processed = process(input)
+        val processed = process(input, false)
 
         return if (processed.hasNext()) {
             logger.info("Processed input to desired output: [$processed]")
@@ -65,7 +64,8 @@ abstract class Action<T>(var prompt: String = "",
                 logger.info("Transformed processed output to object : [$transformed]")
                 logger.info("Executed transformed object to action: [status: $transformed]")
                 val (next, content) = execute(transformed)
-                ActionChain(next, content.message);
+                val executed = if (content.processed is ActionStatus) content.processed.message else content.processed
+                ActionChain(next, executed);
             } else {
                 ActionChain(transformed.state, transformed.content);
             }

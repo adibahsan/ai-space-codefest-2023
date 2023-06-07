@@ -2,14 +2,26 @@ package com.hexamigos.aispaceserver.resource.task
 
 import com.hexamigos.aispaceserver.action.task.Task
 import com.hexamigos.aispaceserver.action.task.TaskDetail
+import com.hexamigos.aispaceserver.action.task.TaskState
 import com.hexamigos.aispaceserver.resource.ResourceManager
 import com.hexamigos.aispaceserver.resource.ResourceManagerType
 import org.springframework.stereotype.Component
 import java.util.UUID
+import javax.annotation.PostConstruct
 
 @Component
 class TaskManager : ResourceManager<String, TaskDetail> {
-    val tasks = HashMap<String, TaskDetail>()
+    companion object {
+        @JvmStatic
+        val tasks = HashMap<String, TaskDetail>()
+    }
+
+    @PostConstruct
+    fun build() {
+        val id = UUID.randomUUID().toString()
+        tasks[id] = TaskDetail(id, "First Task", "ASLDlasDLkaLSDKLASDSD", TaskState.PENDING)
+    }
+
     override fun add(resource: TaskDetail): String {
         tasks.putIfAbsent(resource.id, resource)
         return resource.id

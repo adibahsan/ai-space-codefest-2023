@@ -8,8 +8,8 @@ enum class TaskState {
     PENDING, ONGOING, COMPLETED
 }
 
-class Task(val id: String? = null,
-           var name: String? = null,
+class Task(var id: String? = null,
+           var title: String? = null,
            var description: String? = null,
            var state: TaskState? = TaskState.PENDING,
            var assignedTo: ArrayList<String> = arrayListOf(),
@@ -17,7 +17,7 @@ class Task(val id: String? = null,
            var operationType: OperationType? = null)
 
 class TaskDetail(val id: String = UUID.randomUUID().toString(),
-                 var name: String? = null,
+                 var title: String? = null,
                  var description: String? = null,
                  var state: TaskState? = TaskState.PENDING,
                  var assignedTo: ArrayList<String> = arrayListOf())

@@ -17,3 +17,4 @@ class Processed<I, O>(original: I, processed: O) : ActionResponse<I, O>(original
 
 }
 class Transformed<I, O>(original: I, processed: O) : ActionResponse<I, O>(original, processed)
+class Executed<I, O>(original: I, processed: O) : ActionResponse<I, O>(original, processed)

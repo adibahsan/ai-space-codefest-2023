@@ -19,7 +19,8 @@ class ChatService(val openAiLLM: OpenAiLLM,
         val detectAndExecute = actionCenter.detectAndExecute(message)
 
         if (detectAndExecute.size > 0) {
-            return Chat(role = "Assistant", content = "Action executed with messages: $detectAndExecute")
+
+            return Chat(role = "Assistant", content = "Execution Done.\n${detectAndExecute.joinToString()}")
 
         }
 
