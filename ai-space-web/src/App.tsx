@@ -5,7 +5,6 @@ import Header from "./view/Navbar/Header.tsx";
 import {useState} from "react";
 import LeftSideBar from "./view/Sidebar/LeftSideBar.tsx";
 import RightSideBar from "./view/Sidebar/RightSideBar.tsx";
-import leftSideBar from "./view/Sidebar/LeftSideBar.tsx";
 
 export type ChatMessage = {
     role: string;
@@ -30,8 +29,6 @@ function App(): JSX.Element {
             <br/>
             <RightSideBar isOpen={rightbarOpen} toggleSidebar={handleViewRightbar} />
             <LeftSideBar isOpen={leftbarOpen} toggleSidebar={handleViewSidebar} />
-
-
             <Main/>
         </>
 

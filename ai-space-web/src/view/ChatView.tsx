@@ -1,7 +1,9 @@
 import React, {useEffect, useRef, useState} from "react";
 import {FormEvent} from "react/ts5.0";
 import {ChatMessage} from "../App";
-import {ChatResp, Message} from "../api";
+import {ChatResp, Message} from "../api/api";
+import useTasks from "../reducer/hooks/useTasks.ts";
+import useActions from "../reducer/hooks/useActions.ts";
 
 function ChatView():JSX.Element {
 
@@ -10,7 +12,10 @@ function ChatView():JSX.Element {
     const [isTyping, setIsTyping] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const chatContainerRef = useRef(null);
+    const [task,setTasks] = useTasks()
+    const [actions,setActions] = useActions()
 
+    console.log("TASKS", task, "===> Actions",actions)
 
     useEffect(()=>{
         console.log("New Chat")
@@ -34,6 +39,9 @@ function ChatView():JSX.Element {
         message: string
     ): Promise<void> => {
         e.preventDefault();
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        setTasks([])
         console.log("E Value", e.target);
         scrollChatToBottom()
         if (!message) return;
@@ -71,6 +79,9 @@ function ChatView():JSX.Element {
                 console.log("ChatResp", data)
                 msgs.push(data.message);
                 setChats(msgs);
+                // @ts-ignore
+                setTasks(data.payLoad?.tasks)
+                setActions(data.payLoad?.actions)
                 setIsTyping(false);
                 window.scrollTo(0, 1e10);
             })
@@ -86,14 +97,14 @@ function ChatView():JSX.Element {
             <div className={"chat-container"}  >
                 {chats && chats.length
                     ? chats.map((chat: ChatMessage, index: number) => (
-                        <>
+                        <div key={index}>
                             <div className={`${chat.role === "user" ? "user_msg_div": "ai_msg_div"} d-flex`}>
                             <small style={{fontWeight:"bold"}} >{chat.role ==="user" ? "User" : "Assistant"}</small>
                             </div>
                             <p key={index} className={chat.role === "user" ? "user_msg" : "ai_msg"}>
                                 <pre>{chat.content}</pre>
                             </p>
-                        </>
+                        </div>
                     ))
                     : ""}
 
@@ -101,15 +112,15 @@ function ChatView():JSX.Element {
             </div>
 
             <div className={isTyping ? "" : "hide"}>
-                <text>
+                <pre>
                     <i>{isTyping ? "Assistant is Typing" : ""}</i>
-                </text>
+                </pre>
             </div>
 
             <div className={isError ? "" : "hide"}>
-                <text style={{color:"red"}}>
+                <pre style={{color:"red"}}>
                     <i>{isError ? "Error Occured, Please try again" : ""}</i>
-                </text>
+                </pre>
             </div>
 
 
