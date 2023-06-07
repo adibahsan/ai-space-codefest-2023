@@ -1,6 +1,7 @@
 package com.hexamigos.aispaceserver.service
 
 import com.aallam.openai.api.BetaOpenAI
+import com.hexamigos.aispaceserver.action.ActionCenter
 import com.hexamigos.aispaceserver.domain.Chat
 import com.hexamigos.aispaceserver.integration.ai.llm.LLMResponse
 import com.hexamigos.aispaceserver.integration.ai.llm.OpenAIChatResponse
@@ -9,13 +10,21 @@ import com.hexamigos.aispaceserver.integration.ai.llm.openai.OpenAiLLM
 import org.springframework.stereotype.Service
 
 @Service
-class ChatService(val openAiLLM: OpenAiLLM) {
+class ChatService(val openAiLLM: OpenAiLLM,
+                  val actionCenter: ActionCenter) {
 
     @OptIn(BetaOpenAI::class)
     suspend fun getChatCompletion(message: String): Chat {
         println("Request Body $message")
+        val detectAndExecute = actionCenter.detectAndExecute(message)
 
-        val task = arrayListOf<String>("1. Task: Complete Release. Progress: Done",
+        if (detectAndExecute.size > 0) {
+
+            return Chat(role = "Assistant", content = "Execution Done.\n${detectAndExecute.joinToString()}")
+
+        }
+
+        val task = arrayListOf("1. Task: Complete Release. Progress: Done",
                 "2. Task: Discuss with weleed vai. Progress: Done",
                 "3. Task: Progress meeting on code fest. Progress: Done ",
                 "5. Task: Work on code fest demo. Progress: Ongoing")
