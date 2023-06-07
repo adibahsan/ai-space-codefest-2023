@@ -13,12 +13,12 @@ const useActions = () => {
         dispatch(setActions(newActions));
     }, [dispatch]);
 
-    const handleActionToggle = (taskId: string) => {
+    const handleActionToggle = (taskId: string, status?: boolean) => {
         const updatedTasks = actions.actions.map((task) => {
             if (task.id === taskId) {
                 return {
                     ...task,
-                    status: !task.status,
+                    status: status?? !task.status,
                 };
             }
             return task;
