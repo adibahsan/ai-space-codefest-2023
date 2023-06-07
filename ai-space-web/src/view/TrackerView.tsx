@@ -4,10 +4,7 @@ import {Tasks} from "../api/api";
 
 
 function TrackerView() {
-    // State with list of all checked item
-    const [taskList, setTaskList, updateTaskList] = useTasks()
-    const [checked, setChecked] = useState([]);
-    
+    const [taskList, , updateTaskList] = useTasks()
 
     return (
         <div className={"card"} >

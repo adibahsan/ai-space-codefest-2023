@@ -13,7 +13,21 @@ const useActions = () => {
         dispatch(setActions(newActions));
     }, [dispatch]);
 
-    return  [actions, updateActions];
+    const handleActionToggle = (taskId: string) => {
+        const updatedTasks = actions.actions.map((task) => {
+            if (task.id === taskId) {
+                return {
+                    ...task,
+                    status: !task.status,
+                };
+            }
+            return task;
+        });
+
+        dispatch(setActions(updatedTasks));
+    }
+
+    return  [actions, updateActions, handleActionToggle];
 };
 
 export default useActions;
