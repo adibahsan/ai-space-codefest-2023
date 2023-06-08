@@ -6,13 +6,4 @@ import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
 @Component
-class EmailActionDetector : ActionDetector(ActionType.SEND_EMAIL) {
-    @PostConstruct
-    private fun build() {
-        tags["@send"] = true
-    }
-
-    override fun toString(): String {
-        return "EmailActionDetector"
-    }
-}
+class EmailActionDetector : ActionDetector(ActionType.EMAIL)

@@ -7,6 +7,7 @@ import com.hexamigos.aispaceserver.integration.ai.llm.LLMClient
 import com.hexamigos.aispaceserver.resource.ResourceCenter
 import com.hexamigos.aispaceserver.resource.ResourceManagerType
 import com.hexamigos.aispaceserver.resource.task.TaskManager
+import com.hexamigos.aispaceserver.util.name
 import com.hexamigos.aispaceserver.util.toJson
 import com.hexamigos.aispaceserver.util.toTaskDetail
 import org.slf4j.LoggerFactory
@@ -20,7 +21,9 @@ class TaskAction(val resourceCenter: ResourceCenter,
                  prompt: String = "") : Action<Task>(prompt, llmClient) {
     private val logger = LoggerFactory.getLogger(TaskAction::class.java)
     private val basePrompt = """
-            You are a task manager. You can query, create, update, and delete tasks. When replaying for create, update, and delete operations on tasks you will respond in the JSON format provided here. Add ``` at starting and ending of the JSON
+            You are a task manager. You can query, create, update, and delete tasks. 
+            Response for create, update and delete operations always will start with ``` and end with ```. 
+            When replaying for create, update and delete operations respond in the JSON format provided here.
             ```{
             actionType: TASK ,
             operationType: OPERATION_TYPE,
@@ -33,9 +36,10 @@ class TaskAction(val resourceCenter: ResourceCenter,
             ```
             `OPERATION_TYPE` can be CREATE, UPDATE, DELETE
             `STATUS_TYPE` can be COMPLETED, PENDING, ONGOING
-            @id, @title, @description, @assigned are placeholder that needs to be replaced with the proper value from @task. If the there's no value in placeholder then keep empty types.
+            @id, @title, @description, @state, @assigned are placeholder that needs to be replaced with the proper value from @task. If the there's no value in placeholder then keep empty types.
+            User can query using id, title, description, assigned, state available here in @task section.
             When replaying for query on tasks you will respond in the table format in markdown with header No, Title, Description, State, Assigned To
-            
+            When asked to show tasks or task or task list, take the information from @task section here and replay. If your unsure about that to do replay by 'Sorry. I don't know how proceed with this. Pleas try again'
             ---
             output: 
             ```{response_json}```
@@ -67,7 +71,7 @@ class TaskAction(val resourceCenter: ResourceCenter,
     override fun recompilePrompt() {
         val taskManager = resourceCenter.getResourceByType(ResourceManagerType.TASK) as TaskManager
         val allTasks = taskManager.getAll()
-        prompt = basePrompt + "\n" + allTasks.toJson()
+        prompt = "$basePrompt\n${allTasks.toJson()}"
     }
 
     override fun getActionType() = ActionType.TASK
@@ -116,7 +120,8 @@ class TaskAction(val resourceCenter: ResourceCenter,
         }
 
     }
-    override fun toString() = "TaskAction"
+
+    override fun toString() = this.name()
 
 
 }
