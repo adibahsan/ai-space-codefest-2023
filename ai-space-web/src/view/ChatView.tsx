@@ -95,7 +95,7 @@ function ChatView():JSX.Element {
 
     return (
         <div className={"card"}>
-            <h5 style={{backgroundColor:"black", color:"white", borderRadius:"5px", top:0}}>AI Assistant</h5>
+            <h5 style={{backgroundColor:"#001c01", color:"#f5ffa5", borderRadius:"30px", top:0}}>AI Assistant</h5>
             <br/>
             <div className={"chat-container"}  >
                 {chats && chats.length

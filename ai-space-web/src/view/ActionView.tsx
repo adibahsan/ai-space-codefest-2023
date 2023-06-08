@@ -9,9 +9,9 @@ function ActionView() {
 
     return (
         <div className={"card"}>
-            <div className="title" style={{backgroundColor: "black", color: "white", borderRadius: "10px"}}>Pending
+            <h5 className="title" style={{backgroundColor:"#001c01", color:"#f5ffa5", borderRadius: "30px"}}>Pending
                 Actions
-            </div>
+            </h5>
             {actionList.actions.length === 0 &&
 
                 <>
@@ -60,9 +60,9 @@ function ActionPad({action}: ActionPadProps) {
     return (
         <>
             <div className={"w-100 d-flex row flex-direction-row pb-1"}
-                 style={{backgroundColor: action.status ? "pink" : "grey", borderRadius: "10px", fontSize: "0.85rem"}}>
+                 style={{backgroundColor: action.status ? "#25194e" : "grey", borderRadius: "10px", fontSize: "0.85rem"}}>
                 <div className={"col-sm-12 bg-black"}
-                     style={{color: action.status ? "wheat" : "darkgray", borderRadius: "10px"}}>
+                     style={{color: action.status ? "#c8dd1b" : "darkgray", borderRadius: "10px"}}>
                     <small style={{textDecoration: action.status ? "" : "line-through"}}>{action.actionName}</small>
                 </div>
                 <br/>

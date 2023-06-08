@@ -40,9 +40,8 @@ function TrackerView() {
 
     return (
         <div className={"card"}>
-            <div className="title" style={{backgroundColor: "black", color: "white", borderRadius: "10px"}}>Your
-                CheckList:
-            </div>
+            <h5 className="title" style={{backgroundColor:"#5b0000", color:"#f5ffa5", borderRadius: "30px"}}>Your CheckList
+            </h5>
             <div className="list-container">
                 {taskList.tasks.length === 0 &&
 
@@ -51,7 +50,7 @@ function TrackerView() {
                     </>}
                 {taskList?.tasks.map((task: Tasks, index: number) => (
                     <div className={"row"} key={index}>
-                        <div className={"col-sm-3 d-flex"}>
+                        <div className={"col-sm-3 d-flex align-items-center"}>
                             <input
                                 type="checkbox"
                                 checked={task.status}
@@ -67,7 +66,7 @@ function TrackerView() {
                                 }}
                             />
                         </div>
-                        <div className={"col-sm-6 d-flex"}>
+                        <div className={"col-sm-6 d-flex align-items-center"}>
                             <small className="" style={{textAlign: "left"}}>{task.taskName}</small>
                         </div>
 
