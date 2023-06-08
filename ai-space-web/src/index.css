@@ -16,7 +16,7 @@
 
 html, body{
   scroll-behavior: smooth;
-  background-color: #242424 !important;
+  background-color: #25194E !important;
 }
 
 h1 {
@@ -38,11 +38,11 @@ main{
 }
 
 p{
-  background-color: darkslategray;
+  /*background-color: darkslategray;*/
   max-width: 70%;
   padding: 15px;
   border-radius: 50px;
-  color: wheat;
+  color: #c8dd1b;
 }
 
 p span{
@@ -58,7 +58,7 @@ p span:first-child{
   text-align: right;
   margin-left: 30%;
   display: flex;
-  background-color: #4a0075;
+  background-color: #25194e;
   flex-direction: row-reverse;
 }
 
@@ -66,9 +66,10 @@ p span:first-child{
   text-align: left;
   margin-right: 30%;
   display: flex;
-  background-color: #2f4f4f;
+  background-color: #260c0c;
   flex-direction: row;
 }
+
 
 .user_msg_div{
   justify-content: flex-end;
@@ -120,6 +121,7 @@ pre{
 
 .card{
   padding: 1rem !important;
+  background-color: #c8dd1b !important;
 }
 
 
@@ -137,7 +139,7 @@ header h2 {
   -webkit-background-clip: text;
 }
 header{
-  background-color: #25194E;
+  background-color: #110c23;
   margin-top: -2rem;
   position: fixed;
   width: 100%;
@@ -152,7 +154,7 @@ header{
   height: 100%;
   width: 18vw;
   transition: left 0.3s ease-in-out;
-  background-color: lightgray;
+  background-color: #c8dd1b;
   border-radius: 30px;
 }
 .sidebar-toggle {
@@ -165,7 +167,11 @@ header{
   font-size: 10px;
   border-radius: 30px;
   border : 0;
-  background-color: white;
+  background-color: #c8dd1b;
+  color: #25194E;
+  font-weight: bold;
+  border: 1px solid #25194E;
+
 
 }
 
@@ -176,7 +182,7 @@ header{
   height: 100%;
   width: 18vw;
   transition: right 0.3s ease-in-out;
-  background-color: lightgray;
+  background-color: #c8dd1b;
   border-radius: 30px;
 
 }
@@ -190,8 +196,10 @@ header{
   z-index: 1;
   font-size: 10px;
   border-radius: 30px;
-  border : 0;
-  background-color: white;
+  background-color: #c8dd1b;
+  color: #25194E;
+  font-weight: bold;
+  border: 1px solid #25194E;
 }
 
 .content {
@@ -231,3 +239,4 @@ header{
 .checked-item {
   text-decoration: line-through;
 }
+

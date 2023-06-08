@@ -9,7 +9,7 @@ function ActionView() {
     const [actionList, , ] = useActions()
 
     return (
-        <div className={"card"} >
+        <div>
             <div className="title" style={{backgroundColor:"black", color:"white", borderRadius:"10px"}}>Pending Actions</div>
                 <ul>
                     {actionList?.actions.map((action:Actions, index:number) => (
