@@ -12,7 +12,7 @@ const LeftSideBar = props => {
             <ActionView/>
             <button onClick={props.toggleSidebar} className="sidebar-toggle">
                 Actions
-                {actionList?.actions?.length > 0 && <span style={{left: "12px"}} className="notification-counter">{actionList?.actions?.length ?? 0}</span>}
+                {actionList?.actions?.length > 0 && <span className="notification-counter">{actionList?.actions?.length ?? 0}</span>}
             </button>
         </div>
     );

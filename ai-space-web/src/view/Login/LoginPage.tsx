@@ -1,5 +1,4 @@
 import './LoginPage.css';
-import colors from "cdbreact/dist/theme/colors";
 import {useEffect, useState} from "react";
 const LoginPage = () => {
 
