@@ -1,6 +1,7 @@
 package com.hexamigos.aispaceserver.util
 
 import com.google.gson.Gson
+import com.hexamigos.aispaceserver.action.email.Email
 import com.hexamigos.aispaceserver.action.task.Task
 import com.hexamigos.aispaceserver.action.task.TaskDetail
 import java.util.UUID
@@ -26,4 +27,18 @@ fun Task.toTaskDetail(): TaskDetail {
             assignedTo = assignedTo,
             state = state,
     )
+}
+
+fun Any.name() = this::class.java.name.split(".").takeLast(1).toString()
+
+fun Email.forApproval(): String {
+    return """
+From    : ${this.from}
+To      : ${this.to}
+Cc      : ${this.cc}
+        
+Subject : ${this.sub} 
+        
+Body    : ${this.body}""".trimIndent().trim()
+
 }

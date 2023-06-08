@@ -5,6 +5,7 @@ import com.hexamigos.aispaceserver.action.task.TaskDetail
 import com.hexamigos.aispaceserver.action.task.TaskState
 import com.hexamigos.aispaceserver.resource.ResourceManager
 import com.hexamigos.aispaceserver.resource.ResourceManagerType
+import com.hexamigos.aispaceserver.util.name
 import org.springframework.stereotype.Component
 import java.util.UUID
 import javax.annotation.PostConstruct
@@ -51,5 +52,7 @@ class TaskManager : ResourceManager<String, TaskDetail> {
     }
 
     override fun getResourceType() = ResourceManagerType.TASK
+
+    override fun toString() = this.name()
 
 }
