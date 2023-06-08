@@ -5,6 +5,7 @@ import Header from "./view/Navbar/Header.tsx";
 import {useState} from "react";
 import LeftSideBar from "./view/Sidebar/LeftSideBar.tsx";
 import RightSideBar from "./view/Sidebar/RightSideBar.tsx";
+import SuccessModal from "./view/Modal/SuccessModal.tsx";
 
 export type ChatMessage = {
     role: string;
@@ -25,6 +26,7 @@ function App(): JSX.Element {
     return (
         <>
             <Header />
+            <SuccessModal/>
             {/*<LeftSideBar isOpen={sidebarOpen} toggleSidebar={handleViewSidebar} />*/}
             <br/>
             <RightSideBar isOpen={rightbarOpen} toggleSidebar={handleViewRightbar} />
