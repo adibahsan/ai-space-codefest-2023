@@ -12,17 +12,21 @@ import TrackerView from "./view/TrackerView.tsx";
 import Main from "./view/Main.tsx";
 import {Provider} from "react-redux";
 import store from "./reducer/store.ts";
+import LoginPage from "./view/Login/LoginPage.tsx";
+import SuccessPage from "./view/SuccessPage/SuccessPage.tsx";
 // Put any other imports below so that CSS from your
 // components takes precedence over default styles.
+
+
 
 const router = createBrowserRouter([
     {
         path: "/",
-        element: <App/>,
+        element: <LoginPage/>,
     },
     {
         path: "/chat",
-        element: <ChatView/>,
+        element: <App/>,
     },
     {
         path: "/task",
@@ -31,6 +35,10 @@ const router = createBrowserRouter([
     {
         path: "/home",
         element: <Main/>,
+    },
+    {
+        path: "/success",
+        element: <SuccessPage/>,
     },
 ]);
 
