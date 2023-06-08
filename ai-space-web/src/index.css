@@ -131,19 +131,23 @@ pre{
 
 header h2 {
   font-weight: 600;
-  background-image: linear-gradient(to left, #553c9a, #b393d3);
-  color: transparent;
+  /*background-image: linear-gradient(to left, #553c9a, #b393d3);*/
+  color: #c8dd1b !important;
   background-clip: text;
   -webkit-background-clip: text;
 }
 header{
-  background-color: white;
+  background-color: #25194E;
   margin-top: -2rem;
+  position: fixed;
+  width: 100%;
+  left: 0;
+  z-index: 99999;
 }
 
 .sidebar {
-  position: absolute;
-  top: 70px;
+  position: fixed;
+  top: 60px;
   left: -18vw;
   height: 100%;
   width: 18vw;
@@ -163,13 +167,11 @@ header{
   border : 0;
   background-color: white;
 
-
 }
 
-
 .sidebar-right {
-  position: absolute;
-  top: 70px;
+  position: fixed;
+  top: 60px;
   right: -18vw;
   height: 100%;
   width: 18vw;

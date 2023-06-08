@@ -1,5 +1,4 @@
 import React from "react";
-import TrackerView from "../TrackerView.tsx";
 import ActionView from "../ActionView.tsx";
 
 const LeftSideBar = props => {
