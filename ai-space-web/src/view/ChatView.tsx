@@ -15,6 +15,8 @@ function ChatView():JSX.Element {
     const [task,setTasks] = useTasks()
     const [actions,setActions] = useActions()
 
+    const customName = localStorage.getItem('USER_NAME_AI')
+
     console.log("TASKS", task, "===> Actions",actions)
 
     useEffect(()=>{
@@ -100,7 +102,7 @@ function ChatView():JSX.Element {
                     ? chats.map((chat: ChatMessage, index: number) => (
                         <div key={index}>
                             <div className={`${chat.role === "user" ? "user_msg_div": "ai_msg_div"} d-flex`}>
-                            <small style={{fontWeight:"bold", color: "#25194E"}} >{chat.role ==="user" ? "User" : "Assistant"}</small>
+                            <small style={{fontWeight:"bold", color: "#25194E"}} >{chat.role ==="user" ? customName ? customName : "user" : "Assistant"}</small>
                             </div>
                             <p key={index} className={chat.role === "user" ? "user_msg" : "ai_msg"}>
                                 <pre>{chat.content}</pre>
