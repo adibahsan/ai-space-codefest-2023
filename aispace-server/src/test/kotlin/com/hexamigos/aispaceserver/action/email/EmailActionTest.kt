@@ -24,7 +24,7 @@ class EmailActionTest {
 
     @Test
     fun getActionType() {
-        assertTrue(emailAction.getActionType() == ActionType.SEND_EMAIL)
+        assertTrue(emailAction.getActionType() == ActionType.EMAIL)
     }
 
     @Test

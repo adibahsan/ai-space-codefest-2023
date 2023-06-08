@@ -6,13 +6,4 @@ import org.springframework.stereotype.Component
 import javax.annotation.PostConstruct
 
 @Component
-class TaskActionDetector : ActionDetector(ActionType.TASK) {
-    @PostConstruct
-    private fun build() {
-        tags["@task"] = true
-    }
-
-    override fun toString(): String {
-        return "TaskActionDetector"
-    }
-}
+class TaskActionDetector : ActionDetector(ActionType.TASK)

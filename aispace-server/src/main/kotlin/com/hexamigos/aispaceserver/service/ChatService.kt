@@ -24,21 +24,19 @@ class ChatService(val openAiLLM: OpenAiLLM,
 
         }
 
-        val task = arrayListOf("1. Task: Complete Release. Progress: Done",
-                "2. Task: Discuss with weleed vai. Progress: Done",
-                "3. Task: Progress meeting on code fest. Progress: Done ",
-                "5. Task: Work on code fest demo. Progress: Ongoing")
-
         val (_, responseMessage, _, _) = openAiLLM.getChatCompletion(OpenAIRequest(
                 requestMessage = message,
                 prompts = """
-                        Your are an AI assistant. Given following section answer question only that information.
-                        If your unsure and answer in not explicitly written then say 'Sorry, I don't know how to help with that'
-                        Accessible Projects:
-                        1. Hutch
-                        2. Cube
-                        3. Appigo
-                        ${if (message.contains("@task")) "Task list: \n${task}" else ""}
+                        Your are an AI assistant. Given following section answer question only that information.                        
+                        If your unsure and answer in not explicitly written then say 'Sorry,I don't know how to help with that' and you can suggest the list of actions available here in `#action` section. 
+                        You can do certain actions that are available in #actions section here. The action needs to start with `@` do be performed by system.
+                        When user query for action return the list of actions available in `#action` section with a nice formatting
+                        ---
+                        #actions:
+                        ${actionCenter.availableActions.joinToString(",\n") { "${it.tags.joinToString()}:${it.description}" }}
+                        ---
+                        output:
+                        ```{response}```
                     """.trimIndent().trim()
         )) as OpenAIChatResponse
         val content = responseMessage[0].message?.content;

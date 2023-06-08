@@ -4,14 +4,23 @@ import com.google.gson.Gson
 import com.hexamigos.aispaceserver.action.*
 import com.hexamigos.aispaceserver.integration.ai.llm.*
 import com.hexamigos.aispaceserver.integration.mail.EmailService
+import com.hexamigos.aispaceserver.resource.ResourceCenter
+import com.hexamigos.aispaceserver.util.forApproval
+import com.hexamigos.aispaceserver.util.name
 import org.slf4j.LoggerFactory
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Component
+import java.util.UUID
 import javax.annotation.PostConstruct
 
 
 @Component
-class EmailAction(llmClient: LLMClient,
+class EmailAction(val resourceCenter: ResourceCenter,
                   private val emailService: EmailService,
+                  private val actionApprovalManager: ActionApprovalManager,
+                  @Value("\${email.from}")
+                  private var from: String,
+                  llmClient: LLMClient,
                   prompt: String = "") : Action<Email>(prompt, llmClient) {
     private val logger = LoggerFactory.getLogger(EmailAction::class.java)
     private val gson = Gson()
@@ -36,10 +45,10 @@ class EmailAction(llmClient: LLMClient,
     """.trimIndent().trim()
     }
 
-    override fun getActionType() = ActionType.SEND_EMAIL
+    override fun getActionType() = ActionType.EMAIL
 
     override fun process(input: String, maintainHistory: Boolean): ActionChain<Processed<String, String>> {
-        val chain = super.process(input, false)
+        val chain = super.process(input, true)
         if (chain.hasNext()) {
             val response = chain.content
             if (response.processed.isEmpty()) {
@@ -58,11 +67,25 @@ class EmailAction(llmClient: LLMClient,
     }
 
     override fun execute(chain: ActionChain<Transformed<Any, Email>>): ActionChain<Executed<Any, Any>> {
-        emailService.send(chain.content.processed)
-        return ActionChain(ChainState.FINISHED, Executed(chain.content.processed, ActionStatus.APPROVAL_NEEDED))
+        val email = chain.content.processed
+        email.id = UUID.randomUUID().toString()
+        email.from = from
+        email.approve = {
+            logger.info("Approving email[$email]")
+            emailService.send(email)
+        }
+        email.reject = {
+            logger.info("Rejecting email[$email]")
+            actionApprovalManager.removeFromApproval(email.id)
+        }
+        actionApprovalManager.addForApproval(email)
+        val message = """
+            ${ActionStatus.APPROVAL_NEEDED.message}. Please find the email to be sent.
+            
+            ${email.forApproval()}
+        """.trimIndent().trim()
+        return ActionChain(ChainState.FINISHED, Executed(chain.content.processed, message))
     }
 
-    override fun toString(): String {
-        return "EmailAction"
-    }
+    override fun toString() = this.name()
 }
