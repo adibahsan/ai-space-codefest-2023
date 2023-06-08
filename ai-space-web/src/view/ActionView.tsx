@@ -12,11 +12,16 @@ function ActionView() {
             <div className="title" style={{backgroundColor: "black", color: "white", borderRadius: "10px"}}>Pending
                 Actions
             </div>
-            <ul>
+            {actionList.actions.length === 0 &&
+
+                <>
+                    <h6>You Currently don't have any pending Actions</h6>
+                </>}
+            <div>
                 {actionList?.actions.map((action: Actions, index: number) => (
                     <ActionPad key={index} action={action}/>
                 ))}
-            </ul>
+            </div>
         </div>
     );
 }

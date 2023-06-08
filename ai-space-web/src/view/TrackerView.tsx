@@ -1,10 +1,15 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import useTasks from "../reducer/hooks/useTasks.ts";
 import {Tasks} from "../api/api";
 
 
 function TrackerView() {
     const [taskList, , updateTaskList] = useTasks()
+    const [filterCount, setFilterCount] = useState<number>(0);
+
+    useEffect(() => {
+        setFilterCount(taskList?.tasks?.filter(it => !it.status) ?? 0)
+    }, [taskList]);
 
     var isChecked = (item: boolean) =>
         item ? "checked-item" : "not-checked-item";
@@ -39,6 +44,11 @@ function TrackerView() {
                 CheckList:
             </div>
             <div className="list-container">
+                {taskList.tasks.length === 0 &&
+
+                    <>
+                    <h6>You Currently don't have any pending task</h6>
+                    </>}
                 {taskList?.tasks.map((task: Tasks, index: number) => (
                     <div className={"row"} key={index}>
                         <div className={"col-sm-3 d-flex"}>

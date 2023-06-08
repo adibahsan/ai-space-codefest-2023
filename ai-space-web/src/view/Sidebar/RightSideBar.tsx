@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import TrackerView from "../TrackerView.tsx";
 import useTasks from "../../reducer/hooks/useTasks.ts";
 
 const RightSideBar = props => {
     const sidebarClass = props.isOpen ? "sidebar-right open" : "sidebar-right";
     const [taskList, , updateTaskList] = useTasks()
+
+
 
 
     let filteredTasks = taskList?.tasks?.filter(it => !it.status)
