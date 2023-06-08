@@ -157,6 +157,7 @@ header{
   transition: left 0.3s ease-in-out;
   background-color: #c8dd1b;
   border-radius: 30px;
+  z-index: 10;
 }
 .sidebar-toggle {
   position: absolute;
@@ -185,6 +186,7 @@ header{
   transition: right 0.3s ease-in-out;
   background-color: #c8dd1b;
   border-radius: 30px;
+  z-index: 10;
 
 }
 

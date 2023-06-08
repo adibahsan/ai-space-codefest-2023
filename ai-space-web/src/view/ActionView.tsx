@@ -9,7 +9,7 @@ function ActionView() {
 
     return (
         <div className={"card"}>
-            <h5 className="title" style={{backgroundColor:"#001c01", color:"#f5ffa5", borderRadius: "30px"}}>Pending
+            <h5 className="title" style={{backgroundColor:"#5b0000", color:"#f5ffa5", borderRadius: "30px"}}>Pending
                 Actions
             </h5>
             {actionList.actions.length === 0 &&
