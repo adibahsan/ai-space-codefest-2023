@@ -6,13 +6,15 @@ const LeftSideBar = props => {
     const sidebarClass = props.isOpen ? "sidebar open" : "sidebar";
     const [actionList, ,] = useActions()
 
+    const filteredTasks = actionList?.actions?.filter(it => it.status).length
+
 
     return (
         <div className={sidebarClass}>
             <ActionView/>
             <button onClick={props.toggleSidebar} className="sidebar-toggle">
                 Actions
-                {actionList?.actions?.length > 0 && <span className="notification-counter">{actionList?.actions?.length ?? 0}</span>}
+                {filteredTasks > 0 && <span className="notification-counter">{filteredTasks ?? 0}</span>}
             </button>
         </div>
     );

@@ -70,7 +70,7 @@ function ActionPad({action}: ActionPadProps) {
                     <Button disabled={!action.status} className={"btn btn-success w-100 mt-1 mb-1"}
                             onClick={() => {
                                 approve(action.id)
-                                handleActions(action.id, true)
+                                handleActions(action.id, false)
 
                             }}
                             style={{textDecoration: action.status ? "" : "line-through"}}><small>yes</small></Button>
