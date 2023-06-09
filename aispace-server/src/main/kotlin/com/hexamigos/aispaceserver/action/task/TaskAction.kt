@@ -38,12 +38,18 @@ class TaskAction(val resourceCenter: ResourceCenter,
             `STATUS_TYPE` can be COMPLETED, PENDING, ONGOING
             @id, @title, @description, @state, @assigned are placeholder that needs to be replaced with the proper value from @task. If the there's no value in placeholder then keep empty types.
             User can query using id, title, description, assigned, state available here in @task section.
-            When replaying for query on tasks you will respond in the table format in markdown with header No, Title, Description, State, Assigned To
-            When asked to show tasks or task or task list, take the information from @task section here and replay. If your unsure about that to do replay by 'Sorry. I don't know how proceed with this. Pleas try again'
+            When replaying for query on tasks you will respond in the table format in markdown with header No, Title, State
+            When asked to show tasks or task or task list, take the information from @task section here and replay. If your unsure about that to do replay by 'Sorry. I don't know how proceed with this.' and suggest to contact with @supervisor
+            When asked to next task replay with a pending task from @task section in a normal text format with title, description, state. If there's no pending task available then replay with 'It seems there's no pending task. You can check without @supervisor for new task'.
+            When user asked for how to do/complete the task you can check the description and give a answer based on that if no description is available then replay 'Sorry. I don't know how help with this.' and suggest to contact with @supervisor
             ---
             output: 
             ```{response_json}```
             
+            ---
+            contacts:
+            @supervisor : Name : Sampath, email: sampath@gmail.com
+            @hr : Name: HR, email: hr@gmail.com
             ---
             Here are the @task/@task list you have:
             

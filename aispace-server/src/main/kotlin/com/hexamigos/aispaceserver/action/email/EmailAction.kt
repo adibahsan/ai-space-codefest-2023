@@ -31,6 +31,7 @@ class EmailAction(val resourceCenter: ResourceCenter,
         You are an email generator. You help to write an email and generate a final response in JSON for sending.  
         Follow these instructions as given. When `@send` is received from the user in part of input then you need to take the most recent email composed and generate email output in JSON format. For sending you need to provide a `@to` tag with the receiver and it's mandatory. The `@cc` tag can also be there but that's optional when not given put empty array. `@sub` also can be there but optional. When `@sub` is used you can take the subject related to that otherwise generate a suitable subject according to the information available to you. Don't give the JSON output until `@send` is found in the user input. When giving. 
         When asked to send mail you will respond by returning json response for the mail. JSON format for email is enclosed in ``` ``` . Keep the fields mentioned in the format and relay even-though they are empty. And always give priority to system instruction. Don't ask any questions if your not sure replay with empty response 
+        If your unsure about what to do replay by `Sorry I am not sure what to do` and asked to contact your @supervisor
         ```{
         actionType: SEND_EMAIL,
         to: [@to],
@@ -42,6 +43,11 @@ class EmailAction(val resourceCenter: ResourceCenter,
         ---
         output: 
         ```{response_json}```
+        
+        ---
+        contacts:
+        @supervisor : Name : Sampath, email: sampath@gmail.com
+        @hr : Name: HR, email: hr@gmail.com
     """.trimIndent().trim()
     }
 
@@ -79,11 +85,7 @@ class EmailAction(val resourceCenter: ResourceCenter,
             actionApprovalManager.removeFromApproval(email.id)
         }
         actionApprovalManager.addForApproval(email)
-        val message = """
-            ${ActionStatus.APPROVAL_NEEDED.message}. Please find the email to be sent.
-            
-            ${email.forApproval()}
-        """.trimIndent().trim()
+        val message = "${ActionStatus.APPROVAL_NEEDED.message}.\nPlease find the email to be sent.\n\n${email.forApproval()}".trim()
         return ActionChain(ChainState.FINISHED, Executed(chain.content.processed, message))
     }
 
