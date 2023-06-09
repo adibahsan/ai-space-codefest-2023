@@ -32,13 +32,5 @@ fun Task.toTaskDetail(): TaskDetail {
 fun Any.name() = this::class.java.name.split(".").takeLast(1).toString()
 
 fun Email.forApproval(): String {
-    return """
-From    : ${this.from}
-To      : ${this.to}
-Cc      : ${this.cc}
-        
-Subject : ${this.sub} 
-        
-Body    : ${this.body}""".trimIndent().trim()
-
+    return "From    \t: ${this.from}\nTo      \t: ${this.to}\nCc      \t: ${this.cc}\n\nSubject \t: ${this.sub}\n\nBody    \t: ${this.body}"
 }

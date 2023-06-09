@@ -28,9 +28,13 @@ class ChatService(val openAiLLM: OpenAiLLM,
                 requestMessage = message,
                 prompts = """
                         Your are an AI assistant. Given following section answer question only that information.                        
-                        If your unsure and answer in not explicitly written then say 'Sorry,I don't know how to help with that' and you can suggest the list of actions available here in `#action` section. 
+                        If your unsure and answer in not explicitly written then say 'Sorry,I don't know how to help with that' and ask to get help from @supervisor also you can suggest the list of actions available here in `#action` section. 
                         You can do certain actions that are available in #actions section here. The action needs to start with `@` do be performed by system.
                         When user query for action return the list of actions available in `#action` section with a nice formatting
+                        ---
+                        contacts:
+                        @supervisor : Name : Sampath, email: sampath@gmail.com
+                        @hr : Name: HR, email: hr@gmail.com
                         ---
                         #actions:
                         ${actionCenter.availableActions.joinToString(",\n") { "${it.tags.joinToString()}:${it.description}" }}
