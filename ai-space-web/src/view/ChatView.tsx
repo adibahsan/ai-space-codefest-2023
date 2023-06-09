@@ -21,7 +21,8 @@ function ChatView():JSX.Element {
 
     useEffect(()=>{
         console.log("New Chat")
-        scrollChatToBottom()
+        // scrollChatToBottom()
+        window.scrollTo(0, 1e10);
         // bottomRef.current?.scrollIntoView({behavior: 'smooth'});
     },[chats])
 
@@ -43,9 +44,9 @@ function ChatView():JSX.Element {
         e.preventDefault();
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        setTasks([])
+        // setTasks([])
         console.log("E Value", e.target);
-        scrollChatToBottom()
+        // scrollChatToBottom()
         if (!message) return;
         setIsTyping(true);
         window.scrollTo(0, 1e10);
@@ -81,6 +82,7 @@ function ChatView():JSX.Element {
                 console.log("ChatResp", data)
                 msgs.push(data.message);
                 setChats(msgs);
+                window.scrollTo(0, 1e10);
                 // @ts-ignore
                 setTasks(data.payLoad?.tasks)
                 setActions(data.payLoad?.actions)
